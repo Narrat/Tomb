@@ -1,0 +1,130 @@
+#compdef _tomb tomb
+
+function _tomb {
+    local line
+
+    _arguments -C \
+        "-h[Show help information]" \
+        "-q[run quietly]" \
+        "-v[print version information]" \
+        "-D[print debugging information at runtime]" \
+        "--no-color[do not use colors]" \
+        "1: :(bury close dig engrave exhume forge index list lock open passwd ps resize search setkey slam)" \
+        "*::arg:->args"
+
+    case $line[1] in
+        bury)
+            #_tomb_bury
+            _tomb_assym
+        ;;
+        close)
+            #_tomb_close
+            _tomb_hooks
+        ;;
+        dig)
+            #_tomb_dig
+            _tomb_size
+        ;;
+        engrave)
+            #_tomb_engrave
+        ;;
+        exhume)
+            #_tomb_exhume
+        ;;
+        forge)
+            _tomb_assym
+        ;;
+        index)
+            #_tomb_index
+        ;;
+        list)
+            _tomb_list
+        ;;
+        lock)
+            _tomb_lock
+            _tomb_assym
+        ;;
+        open)
+            _tomb_open
+            _tomb_assym
+            _tomb_hooks
+        ;;
+        passwd)
+            #_tomb_passwd
+            _tomb_assym
+        ;;
+        ps)
+            #_tomb_ps
+        ;;
+        resize)
+            _tomb_size
+            _tomb_assym
+        ;;
+        search)
+            #_tomb_search
+        ;;
+        setkey)
+            #_tomb_setkey
+            _tomb_assym
+        ;;
+        slam)
+            #_tomb_slam
+        ;;
+    esac
+}
+
+
+function _tomb_assym {
+    _arguments \
+        "-g[use a GnuPG key to encrypt a tomb key]" \
+        "-r[provide GnuPG recipients (separated by comma)]" \
+        "-R[provide GnuPG hidden recipients (separated by comma)]"
+}
+
+function _tomb_bury {
+    _arguments \
+        "--silent[Dont output anything]"
+}
+
+function _tomb_close {
+    _arguments \
+        "--repeat=[Repat the <message> any number of times]"
+}
+
+function _tomb_dig {
+    _arguments \
+        "--repeat=[Repat the <message> any number of times]"
+}
+
+function _tomb_forge {
+    _arguments \
+        "-o[specify cipher algo for key generation]" \
+        "--use-urandom[if /dev/random is to slow]" \
+        "--kdf[specify the KDF method]"
+}
+
+function _tomb_hooks {
+    _arguments \
+        "-n[do not process hooks found in tomb]"
+}
+
+function _tomb_list {
+    _arguments \
+        "--get-mount-point[Only print mount point of tombs]"
+}
+
+function _tomb_lock {
+    _arguments \
+        "-o[specify cipher specification]"
+}
+
+function _tomb_open {
+    _arguments \
+        "-o[specify mount options]" \
+        "-p[preserve ownership of files in tomb]"
+}
+
+function _tomb_size {
+    _arguments \
+        "-s[size of tomb (MB)]"
+}

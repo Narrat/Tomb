@@ -1,0 +1,36 @@
+*-s: dig, resize
+
+-k: lock, open, passwd, setkey, resize, bury, exhume
+
+*-n'[do not process hooks found in tomb]: open, close
+
+*-p'[preserve ownership of files in tomb]': open
+
+-o'[mount options used to open]' \
+-o: options passed to commands: open, lock, forge (see man):
+	*--> in forge: specify cipher algo for key generation
+	*--> in lock: specify cipher specification
+	*--> in open: specify mount options
+
+-f'[force operation]': open
+--force
+	--> wo überall?
+
+-g'[use a GnuPG key to encrypt a tomb key]': forge, lock, open, passwd, setkey (resize), bury
+
+-r'[provide GnuPG recipients (separated by comma)]': follows -g; forge, lock. passwd, setkey (resize), bury
+
+-R'[provide GnuPG hidden recipients (separated by comma)]' \
+
+
+*--kdf'[specify the KDF method]': forge
+	--> optionaler Param? (--kdf=19 oder so)
+
+*--use-urandom: forge
+
+*--get-mount‐point: list
+
+___
+Long options
+
+Argumente, wie tomb file name etc
