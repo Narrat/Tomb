@@ -5,37 +5,55 @@ function _tomb {
 
     _arguments -C \
         "-h[Show help information]" \
+        "--help[Show help information]" \
         "-q[run quietly]" \
+        "--quietly[run quietly]" \
         "-v[print version information]" \
+        "--version[print version information]" \
         "-D[print debugging information at runtime]" \
+        "--debug[print debugging information at runtime]" \
+        "-f[force operation]" \
+        "--force[force operation]" \
+        "--tmp[what do I do?]" \
+        "-U[Switch to this user ID when dropping privileges]" \
+        "-G[Switch to this group ID when dropping privileges]" \
+        "-T[Switch to this TTY terminal when dropping privileges]" \
         "--no-color[do not use colors]" \
-        "1: :(bury close dig engrave exhume forge index list lock open passwd ps resize search setkey slam)" \
+        "--unsafe[man page somewhat unclear; either it enables dev or it needs dev enabled]" \
+        "1: :(bury close dig engrave exhume forge help index list lock mount open passwd ps resize search umount setkey slam)" \
         "*::arg:->args"
 
     case $line[1] in
         bury)
-            #_tomb_bury
             _tomb_assym
+            _tomb_sym
+            _tomb_pwd
+            _tomb_pwd_old
         ;;
-        close)
-            #_tomb_close
+        close|umount)
             _tomb_hooks
         ;;
         dig)
-            #_tomb_dig
             _tomb_size
+            _tomb_swap
         ;;
         engrave)
-            #_tomb_engrave
+            _tomb_sym
         ;;
         exhume)
-            #_tomb_exhume
+            _tomb_assym
+            _tomb_sym
+            _tomb_pwd
         ;;
         forge)
+            _tomb_forge
             _tomb_assym
+            _tomb_sym
+            _tomb_swap
+        ;;
+        help)
         ;;
         index)
-            #_tomb_index
         ;;
         list)
             _tomb_list
@@ -43,32 +61,38 @@ function _tomb {
         lock)
             _tomb_lock
             _tomb_assym
+            _tomb_sym
+            _tomb_pwd
         ;;
-        open)
+        mount|open)
             _tomb_open
             _tomb_assym
             _tomb_hooks
+            _tomb_pwd
+            _tomb_swap
+            _tomb_sym
         ;;
-        passwd)
+        passwd|setkey)
             #_tomb_passwd
             _tomb_assym
+            _tomb_sym
+            _tomb_swap
+            _tomb_pwd
+            _tomb_pwd_old
         ;;
         ps)
-            #_tomb_ps
         ;;
         resize)
-            _tomb_size
             _tomb_assym
+            _tomb_sym
+            _tomb_pwd
+            _tomb_size
+            _tomb_swap
         ;;
         search)
-            #_tomb_search
-        ;;
-        setkey)
-            #_tomb_setkey
-            _tomb_assym
+            # allow path completion?
         ;;
         slam)
-            #_tomb_slam
         ;;
     esac
 }
@@ -81,31 +105,17 @@ function _tomb_assym {
         "-R[provide GnuPG hidden recipients (separated by comma)]"
 }
 
-function _tomb_bury {
-    _arguments \
-        "--silent[Dont output anything]"
-}
-
-function _tomb_close {
-    _arguments \
-        "--repeat=[Repat the <message> any number of times]"
-}
-
-function _tomb_dig {
-    _arguments \
-        "--repeat=[Repat the <message> any number of times]"
-}
-
 function _tomb_forge {
     _arguments \
         "-o[specify cipher algo for key generation]" \
         "--use-urandom[if /dev/random is to slow]" \
-        "--kdf[specify the KDF method]"
+        "--kdf=[specify the KDF method]"
 }
 
 function _tomb_hooks {
     _arguments \
-        "-n[do not process hooks found in tomb]"
+        "-n[do not process hooks found in tomb]" \
+        "--nohook[do not process hooks found in tomb]"
 }
 
 function _tomb_list {
@@ -121,10 +131,32 @@ function _tomb_lock {
 function _tomb_open {
     _arguments \
         "-o[specify mount options]" \
-        "-p[preserve ownership of files in tomb]"
+        "-p[preserve ownership of files in tomb]" \
+        "--preserve-ownership[of files in tomb]"
+}
+
+function _tomb_pwd {
+    _arguments \
+        "--tomb-pwd=[Use string as password when needed on tomb]"
+}
+
+function _tomb_pwd_old {
+    _arguments \
+        "--tomb-old-pwd=[Use string as old password when needed on tomb]"
 }
 
 function _tomb_size {
     _arguments \
-        "-s[size of tomb (MB)]"
+        "-s[size of tomb (MB)]" \
+        "--size=[size of tomb (MB)]"
+}
+
+function _tomb_swap {
+    _arguments \
+        "--ignore-swap[ignore existing swap partitions/files]"
+}
+
+function _tomb_sym {
+    _arguments \
+        "-k[the key file to use]"
 }
