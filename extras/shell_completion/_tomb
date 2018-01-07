@@ -1,19 +1,16 @@
 #compdef _tomb tomb
 
+typeset -A opt_args
+
 function _tomb {
     local line
 
     _arguments -C \
-        "-h[Show help information]" \
-        "--help[Show help information]" \
-        "-q[run quietly]" \
-        "--quietly[run quietly]" \
-        "-v[print version information]" \
-        "--version[print version information]" \
-        "-D[print debugging information at runtime]" \
-        "--debug[print debugging information at runtime]" \
-        "-f[force operation]" \
-        "--force[force operation]" \
+        '(-)'{-h,--help}'[print help information]' \
+        '(-)'{-q,--quietly}'[run quietly]' \
+        '(-)'{-v,--version}'[print version information]' \
+        '(-)'{-D,--debug}'[print debugging information at runtime]' \
+        '(-)'{-f,--force}'[force operation]' \
         "--tmp[what do I do?]" \
         "-U[Switch to this user ID when dropping privileges]" \
         "-G[Switch to this group ID when dropping privileges]" \
@@ -73,7 +70,6 @@ function _tomb {
             _tomb_sym
         ;;
         passwd|setkey)
-            #_tomb_passwd
             _tomb_assym
             _tomb_sym
             _tomb_swap
@@ -114,8 +110,7 @@ function _tomb_forge {
 
 function _tomb_hooks {
     _arguments \
-        "-n[do not process hooks found in tomb]" \
-        "--nohook[do not process hooks found in tomb]"
+        '(-)'{-n,--nohook}'[do not process hooks found in tomb]'
 }
 
 function _tomb_list {
@@ -147,8 +142,7 @@ function _tomb_pwd_old {
 
 function _tomb_size {
     _arguments \
-        "-s[size of tomb (MB)]" \
-        "--size=[size of tomb (MB)]"
+        '(-)'{-s,--size}'[size of tomb (MB)]'
 }
 
 function _tomb_swap {
