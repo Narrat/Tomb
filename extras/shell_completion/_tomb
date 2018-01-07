@@ -139,7 +139,7 @@ function _tomb_forge {
 
 function _tomb_hooks {
     _arguments \
-        '(-)'{-n,--nohook}'[do not process hooks found in tomb]'
+        {-n,--nohook}'[do not process hooks found in tomb]'
 }
 
 function _tomb_list {
@@ -171,7 +171,7 @@ function _tomb_pwd_old {
 
 function _tomb_size {
     _arguments \
-        '(-)'{-s,--size}'[size of tomb (MB)]'
+        {-s,--size}'[size of tomb (MB)]'
 }
 
 function _tomb_swap {
