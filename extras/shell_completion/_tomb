@@ -6,30 +6,30 @@ function _tomb {
     local line
 
     local _default_arg
-    local _cmds
+    #local _cmds
 
-    _cmds=(
-        'bury:hide tomb key in a jpeg'
-        'close:close specified tomb or all open tombs'
-        'dig:create a new empty TOMB file'
-        'engrave:makes a QR code of a KEY to be saved on paper'
-        'exhume:extract a buried tomb key'
-        'forge:create a new KEY file and set its password'
-        'help:show the help text'
-        'index:update the search indexes of tombs'
-        'list:list specified tomb or all open tombs'
-        'lock:installs a lock on a TOMB to use it with KEY'
-        'mount:open an existing tomb'
-        'open:open an existing tomb'
-        'passwd:change password of a key'
-        'ps:list all processes running in open tombs'
-        'resize:resize specified tomb (only increase)'
-        'search:looks for filenames matching text patterns'
-        'umount:close specified tomb or all open tombs'
-        'setkey:change the KEY locking a TOMB'
-        'slam:close specified tomb and kill all PIDs using it'
-    )
-    _describe 'command' _cmds
+    #_cmds=(
+    #    'bury:hide tomb key in a jpeg'
+    #    'close:close specified tomb or all open tombs'
+    #    'dig:create a new empty TOMB file'
+    #    'engrave:makes a QR code of a KEY to be saved on paper'
+    #    'exhume:extract a buried tomb key'
+    #    'forge:create a new KEY file and set its password'
+    #    'help:show the help text'
+    #    'index:update the search indexes of tombs'
+    #    'list:list specified tomb or all open tombs'
+    #    'lock:installs a lock on a TOMB to use it with KEY'
+    #    'mount:open an existing tomb'
+    #    'open:open an existing tomb'
+    #    'passwd:change password of a key'
+    #    'ps:list all processes running in open tombs'
+    #    'resize:resize specified tomb (only increase)'
+    #    'search:looks for filenames matching text patterns'
+    #    'umount:close specified tomb or all open tombs'
+    #    'setkey:change the KEY locking a TOMB'
+    #    'slam:close specified tomb and kill all PIDs using it'
+    #)
+    #_describe 'command' _cmds
 
     _default_arg=(
         {-h,--help}'[print help information]'
@@ -43,11 +43,11 @@ function _tomb {
         "-T[Switch to this TTY terminal when dropping privileges]"
         "--no-color[do not use colors]"
         "--unsafe[man page somewhat unclear; either it enables dev or it needs dev enabled]"
-        "1:_cmds: "
+        "1: :(bury close dig engrave exhume forge help index list lock mount open passwd ps resize search umount setkey slam)"
         "*::arg:->args"
     )
 
-    _arguments -s $_default_arg
+    _arguments -C -S $_default_arg
 
     case $line[1] in
         bury)
@@ -156,7 +156,8 @@ function _tomb_open {
     _arguments \
         "-o[specify mount options]" \
         "-p[preserve ownership of files in tomb]" \
-        "--preserve-ownership[of files in tomb]"
+        "--preserve-ownership[of files in tomb]" \
+        "*: :_path_files" && ret=0
 }
 
 function _tomb_pwd {
@@ -181,5 +182,6 @@ function _tomb_swap {
 
 function _tomb_sym {
     _arguments \
-        "-k[the key file to use]"
+        "-k[the key file to use]" \
+        "*: :_path_files" && ret=0
 }
