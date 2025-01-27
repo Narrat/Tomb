@@ -96,7 +96,7 @@ _sudo() {
 		case `basename $pescmd` in
 			"doas"|"sup"|"sud"|"pkexec")
 				command -v $pescmd > /dev/null || _failure "$pescmd executable not found"
-				_verbose "Super user execution using $pescmd or so"
+				_verbose "Super user execution using $pescmd or so2"
 				${pescmd} ${@}
 				return $?
 				;;
