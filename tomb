@@ -906,9 +906,10 @@ function _print() {
 }
 
 _list_optional_tools() {
-	typeset -a _deps
+	local -a _deps
 	_deps=(gettext dcfldd shred steghide)
 	_deps+=(resize2fs tomb-kdb-pbkdf2 argon2 qrencode recoll unoconv lsof setfacl mlocate plocate)
+	local d
 	for d in $_deps; do
 		_print "`which $d`"
 	done
