@@ -2604,11 +2604,11 @@ exec_safe_func_hooks() {
 # $1 is optional, to specify a tomb
 list_tombs() {
 
-	local tombname tombmount tombfs tombfsopts tombloop
+	local mapper tombname tombmount tombfs tombfsopts tombloop
 	local ts tombtot tombused tombavail tombpercent tombp tombsince
-	local tombtty tombhost tombuid tombuser
+	local tombtty tombhost tombuid tombuser t h
 	# list all open tombs
-	mounted_tombs=(`list_tomb_mounts $1`)
+	local mounted_tombs=(`list_tomb_mounts $1`)
 	[[ ${#mounted_tombs} == 0 ]] && {
 		_failure "I can't see any open tomb, may they all rest in peace." }
 
@@ -2666,7 +2666,7 @@ awk "/mapper/"' { print $2 ";" $3 ";" $4 ";" $5 }'`
 		}
 
 		# Now check hooks
-		mounted_hooks=(`list_tomb_binds "$mapper"`)
+		local mounted_hooks=(`list_tomb_binds "$mapper"`)
 		for h in ${mounted_hooks}; do
 			_message "::1 tombname:: hooks ::2 hookdest::" \
 					 $tombname ${h[(ws:;:)2]}
