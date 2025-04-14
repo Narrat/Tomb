@@ -1793,6 +1793,7 @@ cloakify_key() {
 
 	# Cipher the key
 	cloakify -i $TOMBKEYFILE -c $cipher >$destfile
+	local -i res
 	if [ $? != 0 ]; then
 		_warning "Encoding error: cloakify reports problems."
 		res=1
