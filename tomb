@@ -2785,7 +2785,7 @@ search_tombs() {
 	{ _is_found locate } || {
 		_failure "Cannot index tombs on this system: updatedb (mlocate/plocate) not installed." }
 
-	updatedbver=`updatedb --version | grep '^updatedb'`
+	local updatedbver=`updatedb --version | grep '^updatedb'`
 	[[ "$updatedbver" =~ "GNU findutils" ]] && {
 		_warning "Cannot use GNU findutils for index/search commands." }
 	[[ "$updatedbver" =~ "locate" ]] || {
@@ -2794,11 +2794,12 @@ search_tombs() {
 	_verbose "$updatedbver"
 
 	# list all open tombs
-	mounted_tombs=(`list_tomb_mounts`)
+	local mounted_tombs=(`list_tomb_mounts`)
 	[[ ${#mounted_tombs} == 0 ]] && {
 		_failure "I can't see any open tomb, may they all rest in peace." }
 
 	_success "Searching for: ::1::" ${(f)@}
+	local t mapper tombname tombmount
 	for t in ${mounted_tombs}; do
 		_verbose "Checking for index: ::1::" ${t}
 		mapper=`basename ${t[(ws:;:)1]}`
