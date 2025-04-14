@@ -2951,9 +2951,11 @@ resize_tomb() {
 # {{{ Close
 
 umount_tomb() {
-	local tombs how_many_tombs
-	local pathmap mapper tombname tombmount loopdev
-	local ans pidk pname
+	local -a mounted_tombs
+	local -a bind_tombs
+	local mapper tombname tombmount tombfs tombfsopts tombloop
+	local bind_mapper bind_mount tombname_regex
+	local ans pidk pname t b
 	local toclose=$1
 
 	[[ -v SLAM && -z "$toclose" ]] && {
