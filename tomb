@@ -1165,8 +1165,8 @@ gpg_decrypt() {
 	# fix for gpg 1.4.11 where the --status-* options don't work ;^/
 	local gpgver=$(gpg --version --no-permission-warning | awk '/^gpg/ {print $3}')
 	local gpgpass="$1\n$TOMBKEY"
-	local tmpres ret
-	typeset -a gpgopt
+	local tmpres ret i
+	local -a gpgopt
 	gpgpopt=(--batch --no-tty --passphrase-fd 0 --no-options)
 
 	{ option_is_set -g } && {
@@ -1175,7 +1175,7 @@ gpg_decrypt() {
 
 		# GPG option '--try-secret-key' exist since GPG 2.1
 		{ option_is_set -R } && { autoload -U is-at-least && is-at-least "2.1" $gpgver } && {
-			typeset -a recipients
+			local -a recipients
 			recipients=(${(s:,:)$(option_value -R)})
 			{ is_valid_recipients $recipients } || {
 				_failure "You set an invalid GPG ID."
