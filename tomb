@@ -1092,7 +1092,7 @@ recover_key() {
 
 	_warning "Attempting key recovery."
 
-	_head="${key[(f)1]}" # take the first line
+	local _head="${key[(f)1]}" # take the first line
 
 	TOMBKEY=""		  # Reset global variable
 
