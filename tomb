@@ -417,6 +417,7 @@ _ensure_safe_swap() {
 	[[ -z "$swaps" ]] && return 0 # No swap partition is active
 
 	_message "An active swap partition is detected..."
+	local s
 	for s in $=swaps; do
 		if _is_encrypted_block $s; then
 			r=2;
