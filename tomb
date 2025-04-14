@@ -1918,7 +1918,7 @@ dig_tomb() {
 	# Require the specification of the size of the tomb (-s) in MiB
 	local -i tombsize=$(option_value -s)
 
-	_message "Commanded to dig tomb ::1 tomb path::" $tombpath
+	_message "Commanded to dig tomb ::1 tomb path::" $1
 
 	[[ ! -z $1 ]] || _failure "Missing path to tomb"
 	[[ -n "$tombsize"	]] || _failure "Size argument missing, use -s"
