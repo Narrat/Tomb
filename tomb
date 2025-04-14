@@ -2841,7 +2841,7 @@ resize_tomb() {
 	_message "Commanded to resize tomb ::1 tomb name:: to ::2 size:: mebibytes." $1 $OPTS[-s]
 
 	[[ -z "$1" ]] && _failure "No tomb name specified for resizing."
-	[[ ! -r "$1" ]] && _failure "Cannot find ::1::" $1
+	[[ ! -r "$1" ]] && _failure "Cannot find ::1::" $tombpath
 
 	local newtombsize="`option_value -s`"
 	[[ -z "$newtombsize" ]] && {
@@ -2904,7 +2904,7 @@ resize_tomb() {
 		_failure "cryptsetup failed to resize ::1 mapper::" $TOMBMAPPER }
 
 
-	filesystem=`_detect_filesystem /dev/mapper/${TOMBMAPPER}`
+	local filesystem=`_detect_filesystem /dev/mapper/${TOMBMAPPER}`
 	_message "Filesystem detected: ::1 filesystem::" $filesystem
 	case $filesystem in
 		ext3|ext4)
