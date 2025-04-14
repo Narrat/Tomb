@@ -1423,16 +1423,16 @@ gen_key() {
 	local algo="${algopt:-AES256}"
 	local gpgpass opt
 	local recipients_opt
-	typeset -a gpgopt
+	local -a gpgopt
 	# here user is prompted for key password
-	tombpass=""
-	tombpasstmp=""
+	local tombpass=""
+	local tombpasstmp=""
 
 	if option_is_set -g; then
 		gpgopt=(--encrypt)
 
 		if option_is_set -r || option_is_set -R; then
-			typeset -a recipients
+			local -a recipients
 			if option_is_set -r; then
 				recipients=(${(s:,:)$(option_value -r)})
 				recipients_opt="--recipient"
@@ -1448,6 +1448,7 @@ gen_key() {
 			_warning "You are going to encrypt a tomb key with ::1 nrecipients:: recipient(s)."	 ${#recipients}
 			_warning "It is your responsibility to check these fingerprints."
 			_warning "The fingerprints are:"
+			local gpg_id
 			for gpg_id in ${recipients[@]}; do
 				_warning "	  `_gpg_fingerprint "$gpg_id"` :: `_gpg_uid "$gpg_id"`"
 			done
@@ -1480,15 +1481,13 @@ gen_key() {
 				if [ "$tombpasstmp" = "$tombpass" ]; then
 					break;
 				fi
-				unset tombpasstmp
-				unset tombpass
 			done
 		else
 			tombpass="$2"
 			_verbose "gen_key takes tombpass from CLI argument: ::1 tomb pass::" $tombpass
 		fi
 
-		header=""
+		local header=""
 		[[ $KDF == 1 ]] || [[ $ARGON2 == 1 ]] && {
 			{ option_is_set --kdf } && {
 				# KDF is a key strengthening technique against brute forcing
@@ -1496,6 +1495,8 @@ gen_key() {
 				# Two KDF are currently supported:
 				# * pbkdf2 (time restrictive)
 				# * argon2 (memory, parallelismn restrictive and through those time)
+				local kdfsalt kdftype
+				local -i kdfiter pbkdf2_iter kdf_mem kdf_par
 
 				# --kdfiter takes one integer value as parameter
 				# argon2: # of iterations (default of 3);
@@ -1559,8 +1560,8 @@ gen_key() {
 		| gpg --openpgp --force-mdc --cipher-algo ${algo} \
 			  --batch --no-tty ${gpgopt} \
 			  --status-fd 2 -o - --armor 2> $tmpres >> "$1"
-	unset gpgpass
 	# check result of gpg operation
+	local i
 	for i in ${(f)"$(cat $tmpres)"}; do
 		_verbose "$i"
 	done
@@ -1571,8 +1572,6 @@ gen_key() {
 		#	  -o - -c -a ${lukskey}
 
 	TOMBPASSWORD="$tombpass"	# Set global variable
-	unset tombpass
-	unset tombpasstmp
 }
 
 # prints an array of ciphers available in gnupg (to encrypt keys)
