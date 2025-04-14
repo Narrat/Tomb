@@ -2231,7 +2231,7 @@ change_tomb_key() {
 	fi
 	[[ $? == 0 ]] || {
 		_failure "No valid password supplied for the old key." }
-	old_secret=$TOMBSECRET
+	local old_secret=$TOMBSECRET
 
 	# luksOpen the tomb (not really mounting, just on the loopback)
 	print -R -n - "$old_secret" | _sudo cryptsetup --key-file - \
@@ -2253,7 +2253,7 @@ change_tomb_key() {
 		_failure "No valid password supplied for the new key." }
 
 	_tmp_create
-	tmpnewkey=$TOMBTMP
+	local tmpnewkey=$TOMBTMP
 	print -R -n - "$TOMBSECRET" >> $tmpnewkey
 
 	print -R -n - "$old_secret" | _sudo cryptsetup --key-file - \
