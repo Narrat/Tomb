@@ -1305,10 +1305,10 @@ ask_key_password() {
 	fi
 
 	_message "A password is required to use key ::1 key::" $TOMBKEYFILE
-	passok=0
-	tombpass=""
+	local passok=0
+	local tombpass=""
 	if [[ -z $1 ]]; then
-
+		local c
 		for c in 1 2 3; do
 			if [[ $c == 1 ]]; then
 				tombpass=$(ask_password "Insert password to: $TOMBKEYFILE")
