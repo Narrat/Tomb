@@ -805,6 +805,7 @@ option_value() {
 option_value_contains() {
 	local opt="${OPTS[$1]}"
 	local str="$2"
+	local i
 	for i in ${(s:,:)opt}; do
 		[[ "$i" == "$2" ]] && return 0
 	done
