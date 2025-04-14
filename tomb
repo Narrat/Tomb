@@ -815,8 +815,8 @@ option_value_contains() {
 # Messaging function with pretty coloring
 function _msg() {
 	local msg="$2"
+	_is_found gettext && msg="$(gettext -s "$msg")"
 	local i
-	_is_found gettext && msg="$(gettext -s "$2")"
 	for i in {3..${#}}; do
 		msg=${(S)msg//::$(($i - 2))*::/$*[$i]}
 	done
