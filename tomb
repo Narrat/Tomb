@@ -2733,7 +2733,7 @@ FNR==1 {next}
 # index files in all tombs for search
 # $1 is optional, to specify a tomb
 index_tombs() {
-	mounted_tombs=(`list_tomb_mounts $1`)
+	local mounted_tombs=(`list_tomb_mounts $1`)
 	[[ ${#mounted_tombs} == 0 ]] && {
 		# Considering one tomb
 		[[ -n "$1" ]] && {
@@ -2749,6 +2749,7 @@ index_tombs() {
 	# 	_verbose "unoconv listener launched."
 	# 	sleep 1 }
 
+	local t mapper tombname tombmount updatedbver
 	for t in ${mounted_tombs}; do
 		mapper=`basename ${t[(ws:;:)1]}`
 		tombname=${t[(ws:;:)5]}
