@@ -2032,7 +2032,6 @@ forge_key() {
 	_message "(You can also change it later using 'tomb passwd'.)"
 	# _user_file $TOMBKEYFILE
 
-	tombname="$TOMBKEYFILE" # XXX ???
 	# the gen_key() function takes care of the new key's encryption
 	{ option_is_set --tomb-pwd } && {
 		local tombpwd="`option_value --tomb-pwd`"
