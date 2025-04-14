@@ -926,6 +926,7 @@ _list_optional_tools() {
 _ensure_dependencies() {
 
 	# Check for required programs
+	local req
 	for req in cryptsetup gpg mkfs.ext4 e2fsck; do
 		_is_found $req || {
 			_failure "Missing required dependency ::1 command::.  Please install it." $req; }
