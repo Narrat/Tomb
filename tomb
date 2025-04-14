@@ -2525,12 +2525,12 @@ exec_safe_bind_hooks() {
 		_verbose "bind-hooks not found in ::1 mount point::" $mnt
 		return 0 }
 
-	typeset -Al maps		# Maps of files and directories to mount
-	typeset -al mounted		# Track already mounted files and directories
+	local -Al maps		# Maps of files and directories to mount
+	local -al mounted	# Track already mounted files and directories
 
 	# better parsing for bind hooks checks for two separated words on
 	# each line, using zsh word separator array subscript
-	_bindhooks="${mapfile[${mnt}/bind-hooks]}"
+	local _bindhooks="${mapfile[${mnt}/bind-hooks]}"
 	for h in ${(f)_bindhooks}; do
 		h=${h//\\ /__ESC_SPACE__}
 		s="${h[(w)1]}"
@@ -2542,8 +2542,8 @@ exec_safe_bind_hooks() {
 		maps+=($s $d)
 		_verbose "bind-hook found: $s -> $d"
 	done
-	unset _bindhooks
 
+	local dir
 	for dir in ${(k)maps}; do
 		[[ "${dir[1]}" == "/" || "${dir[1,2]}" == ".." ]] && {
 			_warning "bind-hooks map format: local/to/tomb local/to/\$HOME"
