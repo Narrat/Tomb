@@ -1216,14 +1216,14 @@ get_lukskey() {
 	# $1 is the password
 	_verbose "get_lukskey"
 
-	_password="$1"
-
-
-	firstline="${TOMBKEY[(f)1]}"
+	local kdf_salt kdf_ic kdf_len kdf_mem kdf_par
+	local -i ret
+	local _password="$1"
+	local firstline="${TOMBKEY[(f)1]}"
 
 	# key is KDF encoded
 	if [[ $firstline =~ '^_KDF_' ]]; then
-		kdf_hash="${firstline[(ws:_:)2]}"
+		local kdf_hash="${firstline[(ws:_:)2]}"
 		_verbose "KDF: ::1 kdf::" "$kdf_hash"
 		case "$kdf_hash" in
 			"pbkdf2sha1")
