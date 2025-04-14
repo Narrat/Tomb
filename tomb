@@ -1594,7 +1594,7 @@ bury_key() {
 
 	_load_key	 # Try loading key from option -k and set TOMBKEY
 
-	imagefile=$PARAM
+	local imagefile=$PARAM
 
 	[[ "`file $imagefile`" =~ "JPEG" ]] || {
 		_warning "Encode failed: ::1 image file:: is not a jpeg image." $imagefile
@@ -1633,8 +1633,8 @@ bury_key() {
 		TOMBPASSWORD="`option_value --tomb-pwd`"
 		_verbose "tomb-pwd = ::1 tomb pass::" $TOMBPASSWORD
 	elif option_is_set -g; then
-		tombpass=""
-		tombpasstmp=""
+		local tombpass=""
+		local tombpasstmp=""
 		while true; do
 			# 3 tries to write two times a matching password
 			tombpass=`ask_password "Type a password to bury your key"`
@@ -1652,8 +1652,6 @@ bury_key() {
 			if [ "$tombpasstmp" = "$tombpass" ]; then
 				break;
 			fi
-			unset tombpasstmp
-			unset tombpass
 		done
 		TOMBPASSWORD="$tombpass"
 	fi
@@ -1666,6 +1664,7 @@ bury_key() {
 {print $0}' \
 		| steghide embed --embedfile - --coverfile ${imagefile} \
 				   -p $TOMBPASSWORD -z 9 -e serpent cbc
+	local res
 	if [ $? != 0 ]; then
 		_warning "Encoding error: steghide reports problems."
 		res=1
