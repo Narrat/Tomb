@@ -2129,6 +2129,7 @@ lock_tomb_with_key() {
 	_load_key	 # Try loading key from option -k and set TOMBKEYFILE
 
 	# the encryption cipher for a tomb can be set when locking using -c
+	local algopt
 	{ option_is_set -o } && algopt="$(option_value -o)"
 	[[ -n "$algopt" ]] && cipher=$algopt
 	_message "Locking using cipher: ::1 cipher::" $cipher
