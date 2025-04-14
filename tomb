@@ -1021,9 +1021,10 @@ is_valid_recipients() {
 # Print the recipient arg to be used in gpg.
 _recipients_arg() {
 	local arg="$1"; shift
-	typeset -a recipients
+	local -a recipients
 	recipients=($@)
 
+	local gpg_id
 	for gpg_id in ${recipients[@]}; do
 		print -R -n "$arg $gpg_id "
 	done
