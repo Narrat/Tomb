@@ -637,6 +637,7 @@ is_valid_tomb() {
 	TOMBMAPPER="tomb.$TOMBNAME.${maphash[(w)1]}.`basename $TOMBLOOP`"
 	local mounted_tombs=(`list_tomb_mounts`)
 	local usedmapper
+	local t
 	for t in ${mounted_tombs}; do
 		usedmapper=`basename "${t[(ws:;:)1]}"`
 		[[ "${usedmapper%.*}" == "${TOMBMAPPER%.*}" ]] &&
