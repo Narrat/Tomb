@@ -534,6 +534,7 @@ ask_password() {
 	fi
 	_verbose "Checking backends '${backends}'"
 
+	local backend
 	for backend in "${backends[@]}"; do
 		pinentry="$(which pinentry-$backend)"
 		lddout=$(ldd "$pinentry" 2>/dev/null) || continue
@@ -552,6 +553,7 @@ ask_password() {
 
 	# parse the pinentry output
 	local pinentry_error
+	local i
 	for i in ${(f)output}; do
 		[[ "$i" =~ "^ERR.*" ]] && {
 			pinentry_error="${i[(w)3]}"
