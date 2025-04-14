@@ -192,6 +192,7 @@ _endgame() {
 	TOMBPASSWORD="$rr";	 unset TOMBPASSWORD
 
 	# Clear temporary files
+	local f
 	for f in $TOMBTMPFILES; do
 		${=WIPE} "$f"
 	done
