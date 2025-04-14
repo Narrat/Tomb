@@ -2324,9 +2324,10 @@ mount_tomb() {
 	_success "Opening ::1 tomb file:: on ::2 mount point::" $TOMBNAME "$tombmount"
 
 	# check if the mountpoint is already used
-	mounted_tombs=(`list_tomb_mounts`)
+	local mounted_tombs=(`list_tomb_mounts`)
+	local t
 	for t in ${mounted_tombs}; do
-		usedmount=${t[(ws:;:)2]}
+		local usedmount=${t[(ws:;:)2]}
 		[[ "$usedmount" == "$tombmount" ]] &&
 			_failure "Mountpoint already in use: ::1 mount point::" "$tombmount"
 	done
@@ -2353,7 +2354,7 @@ mount_tomb() {
 	_verbose "Tomb name: ::1 tomb name:: (to be engraved)" $TOMBNAME
 
 	{ option_is_set --tomb-pwd } && { ! option_is_set -g } && {
-		tomb_pwd="`option_value --tomb-pwd`"
+		local tomb_pwd="`option_value --tomb-pwd`"
 		_verbose "tomb-pwd = ::1 tomb pass::" $tomb_pwd
 		ask_key_password "$tomb_pwd"
 	} || {
@@ -2436,7 +2437,7 @@ mount_tomb() {
 	}
 
 	_success "Success opening ::1 tomb file:: on ::2 mount point::" $TOMBFILE "$tombmount"
-	local tombtty tombhost tombuid tombuser
+	local tombsince tombtty tombhost tomblast tombuid tombuser
 
 	# print out when it was opened the last time, by whom and where
 	[[ -r "${tombmount}/.last" ]] && {
