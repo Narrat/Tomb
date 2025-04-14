@@ -295,7 +295,7 @@ _tmp_create() {
 
 	# We're going to add one more $RANDOM for each time someone complains
 	# about this being too weak of a random.
-	tfile="${TMPDIR}/$RANDOM$RANDOM$RANDOM$RANDOM"	# Temporary file
+	local tfile="${TMPDIR}/$RANDOM$RANDOM$RANDOM$RANDOM"	# Temporary file
 	umask 066
 	[[ $? == 0 ]] || {
 		_failure "Fatal error setting the permission umask for temporary files" }
