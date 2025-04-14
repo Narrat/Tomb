@@ -985,15 +985,16 @@ _ensure_dependencies() {
 
 # $@ is the list of all the recipient used to encrypt a tomb key
 is_valid_recipients() {
-	typeset -a recipients
+	local -a recipients
 	recipients=($@)
-	trusted=(m f u w s)
+	local trusted=(m f u w s)
 
 	_verbose "is_valid_recipients"
 
 	# All the keys ID must be valid (the public keys must be present in the database)
+	local gpg_id
 	for gpg_id in ${recipients[@]}; do
-		trust="$(gpg --with-colons --batch --list-keys "$gpg_id" 2> /dev/null |
+		local trust="$(gpg --with-colons --batch --list-keys "$gpg_id" 2> /dev/null |
 				 	awk 'BEGIN { FS=":" } /^pub/ { print $2; exit}')"
 		[[ "${trust}" == "" ]] && {
 			_warning "Not a valid GPG key ID: ::1 gpgid:: " $gpg_id
