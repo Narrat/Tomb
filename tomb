@@ -894,7 +894,7 @@ function _warning() {
 }
 
 function _failure() {
-	typeset -i exitcode=${exitv:-1}
+	local -i exitcode=${exitv:-1}
 	option_is_set -q || _msg failure $@
 	# be sure we forget the secrets we were told
 	exit $exitcode
