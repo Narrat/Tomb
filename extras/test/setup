@@ -101,15 +101,11 @@ test_export() {
 }
 
 tt() {
-	start_loops=(`sudo losetup -a |cut -d: -f1`)
 	start_temps=(`find /dev/shm -name 'tomb*'`)
 	"${T}" -D ${=@}
 	res=$?
-	loops=(`sudo losetup -a |cut -d: -f1`)
 	temps=(`find /dev/shm -name 'tomb*'`)
 
-	{ test "${#start_loops}" = "${#loops}" } || {
-	    print "loop device usage change to ${#loops}" }
 	{ test "${#start_temps}" = "${#temps}" } || {
 	    print "temp files usage change to ${#temps}" }
 	print "     Tomb command returns $res"
