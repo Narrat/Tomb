@@ -101,13 +101,8 @@ test_export() {
 }
 
 tt() {
-	start_temps=(`find /dev/shm -name 'tomb*'`)
 	"${T}" -D ${=@}
 	res=$?
-	temps=(`find /dev/shm -name 'tomb*'`)
-
-	{ test "${#start_temps}" = "${#temps}" } || {
-	    print "temp files usage change to ${#temps}" }
 	print "     Tomb command returns $res"
 	return $res
 }
